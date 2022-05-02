@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<div class="row justify-content-center author w-100">
+    <form action="" method="post" class="shadow" enctype="multipart/form-data">
+        <div class="row justify-content-center auth-add">
+            <h4>Add/Update</h4>
+        </div>
+
+        {% csrf_token %}
+
+        {{form.media}}
+        {{form|crispy}}
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-block btn-success mb-5">Save</button>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

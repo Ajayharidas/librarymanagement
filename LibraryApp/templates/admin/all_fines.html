@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <h3 class="mt-5">Fine list</h3>
+</div>
+
+<div class="row justify-content-center">
+
+    <table class="table table-hover" style="font-size: small;">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>member name</th>
+                <th>address</th>
+                <th>mobile</th>
+                <th>book</th>
+                <th>amount</th>
+                <th>status</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fine in fines %}
+                <tr>
+                    <td>{{fine.id}}</td>
+                    <td>{{fine.user.user.first_name}} {{fine.user.user.last_name}}</td>
+                    <td>{{fine.user.user_address}}</td>
+                    <td>{{fine.user.user_mobile}}</td>
+                    <td>{{fine.issue.book.book_name}}</td>
+                    <td>{{fine.amount}}</td>
+                    {% if fine.issue.returned %}
+                        <td>returned</td>
+                    {% else %}
+                        <td>not returned</td>
+                    {% endif %}
+                    <td><a href="{% url 'delete_fine' fine.id %}" class="btn btn-sm btn-outline-danger">remove</a></td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

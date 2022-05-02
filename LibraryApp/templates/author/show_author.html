@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <h1 class="auth-list">Authors</h1>
+</div>
+<div class="row justify-content-center">
+    <table class="table table-hover table-bordered">
+
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Article</th>
+                <th>Photo</th>
+                <th>Update</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            {% for author in authors %}
+            <tr>
+                <td><small>{{author.id}}</small></td>
+                <td><small>{{author.author_name}}</small></td>
+                <td><small>{{author.author_article | safe}}</small></td>
+                <td><img src="{{author.author_image.url}}" alt="{{author.author_name}}" class="w-100"></td>
+                <td><a href="{% url 'edit_author' author.id %}" class="btn btn-sm btn-outline-info">update</a></td>
+                <td><a href="{% url 'delete_author' author.id %}" class="btn btn-sm btn-outline-danger">remove</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock%}

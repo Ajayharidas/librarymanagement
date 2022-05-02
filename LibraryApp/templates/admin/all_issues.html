@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    {% for message in messages %}
+    <div class="alert alert-muted text-warning">{{message}}</div>
+    {% endfor %}
+</div>
+
+<div class="row justify-content-center ad-form">
+    <div class="card col-6">
+        <form action="{% url 'requested_issues' %}" class="mt-5">
+            <div class="form-group">
+                <label for="search">search user</label>
+                <input type="text" class="form-control" name="userID" id="search">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-dark">search</button>
+            </div>
+        </form>
+    </div>
+    <div class="card col-6 mt-5">
+        <ul class="list-disc">
+            {% for issue in issues %}
+                <li>
+                    <small><b>{{issue.book.book_name}}</b> issue requested by <b>{{issue.user.user.first_name}} {{issue.user.user.last_name}}</b>
+                    created at:- <b>{{issue.created_at}}</b></small>
+                    <div>
+                    {% if user.is_superuser %}
+                        {% if issue.issued %}
+                            <p>issued</p>
+                            {% if issue.returned %}
+                                <p>returned</p>
+                            {% else %}
+                                <p>not returned</p>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'issue_book' issue.id %}" class="text-decoration-none">issue book</a>
+                        {% endif %}
+                    {% endif %}
+                    </div>
+                </li>
+            {% empty %}
+
+                <h3>nothing found</h3>
+
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

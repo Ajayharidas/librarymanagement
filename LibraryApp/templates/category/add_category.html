@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="row justify-content-center cat-add">
+    <h4>new category</h4>
+</div>
+
+<div class="row justify-content-center">
+    <form action="" method="post" class="cat-form">
+
+        {% csrf_token %}
+
+        {{form|crispy}}
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-block btn-dark mb-5">
+        </div>
+
+    </form>
+</div>
+
+{% endblock%}

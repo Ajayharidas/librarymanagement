@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<form action="" method="get">
+    {% csrf_token %}
+
+    {{book_filter.form|crispy}}
+
+    <button type="submit" class="btn btn-primary">Search</button>
+
+</form>
+<div class="row">
+    
+    {% for book in books%}
+            <p class="card-text">{{book.book_name}}</p>
+
+    {% empty %}
+        <h1>no books</h1>
+    {% endfor %}
+</div>
+
+{% endblock %}

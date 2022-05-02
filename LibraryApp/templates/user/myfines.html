@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <h4 class="mt-5">My Fines</h4>
+</div>
+<div class="row justify-content-center">
+    <ul class="list-disc">
+        {% for fine in fines %}
+            {% if fine.issue.returned %}
+                <li>
+                    <p class="mb-0">Fine of <b>Rs.{{fine.amount}}</b> for book :- <b>{{fine.issue.book.book_name}} </b></p>
+                    <small class="text-info">paid and returned</small>
+                </li>
+            {% else %}
+                <li>
+                    <p class="mb-0">Fine of <b>Rs.{{fine.amount}}</b> for book :- <b>{{fine.issue.book.book_name}} </b></p>
+                    <small class="text-info"><a href="{% url 'return_book' fine.issue.id %}" class="text-decoration-none">pay and return</a></small>
+                </li>
+            {% endif %}
+        {% empty %}
+
+            <h3 style="margin-left: -35px; margin-top: 40px;">No fines</h3>
+
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

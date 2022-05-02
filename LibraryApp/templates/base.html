@@ -1,0 +1,127 @@
+{% load crispy_forms_filters %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Open+Sans:wght@300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/library.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm w-100">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navBar"><i
+                        class="fa fa-bars"></i></button>
+                {% if user.is_authenticated %}
+                {% if not user.is_superuser %}
+                <div class="collapse navbar-collapse" id="navBar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <h4>DIGI-LIB</h4>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">home</a></li>
+                        <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link">my account</a></li>
+                        <li class="nav-item"><a href="{% url 'myissues' %}" class="nav-link">my issues</a></li>
+                        <li class="nav-item"><a href="{% url 'myfines' %}" class="nav-link">my fines</a></li>
+                        <li class="nav-item"><a href="{% url 'log_out' %}" class="nav-link">log out</a></li>
+                    </ul>
+                </div>
+                {% else %}
+                <div class="collapse navbar-collapse" id="navBar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <h4>DIGI-LIB</h4>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">home</a></li>
+                        <li class="nav-item">
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-muted  dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    category
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a href="{% url 'add_category' %}" class="dropdown-item">add category</a>
+                                    <a href="{% url 'show_category' %}" class="dropdown-item">show category</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-muted  dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    book
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a href="{% url 'add_book' %}" class="dropdown-item">add book</a>
+                                    <a href="{% url 'show_book' %}" class="dropdown-item">show book</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-muted  dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    author
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a href="{% url 'add_author' %}" class="dropdown-item">add author</a>
+                                    <a href="{% url 'show_author' %}" class="dropdown-item">show author</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a href="{% url 'requested_issues' %}" class="nav-link">requests</a></li>
+                        <li class="nav-item"><a href="{% url 'all_fines' %}" class="nav-link">fines</a></li>
+                        <li class="nav-item"><a href="{% url 'members' %}" class="nav-link">members</a></li>
+                        <li class="nav-item"><a href="{% url 'log_out' %}" class="nav-link">log out</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+                {% else %}
+
+                <div class="collapse navbar-collapse" id="navBar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">home</a></li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a href="{% url 'log_in' %}" class="nav-link">log in</a></li>
+                    </ul>
+                </div>
+
+                {% endif%}
+            </nav>
+        </div>
+
+        {% block content %}
+
+
+        {% endblock %}
+
+    </div>
+    <div class="container-fluid">
+        <div class="row footer">
+            {% include 'footer.html' %}
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <h3 class="mt-5">Members list</h3>
+</div>
+
+<div class="row justify-content-center">
+
+    <table class="table table-hover" style="font-size: small;">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>address</th>
+                <th>gender</th>
+                <th>mobile</th>
+                <th>email</th>
+                <th>username</th>
+                <th>photo</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in user %}
+                <tr>
+                    <td>{{u.user.id}}</td>
+                    <td>{{u.user.first_name}}</td>
+                    <td>{{u.user.last_name}}</td>
+                    <td>{{u.user_address}}</td>
+                    <td>{{u.user_gender}}</td>
+                    <td>{{u.user_mobile}}</td>
+                    <td>{{u.user.email}}</td>
+                    <td>{{u.user.username}}</td>
+                    <td><img src="{{u.user_photo.url}}" alt="" class="w-25"></td>
+                    <td><a href="{% url 'delete_member' u.user.id %}" class="btn btn-sm btn-outline-danger">remove</a></td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

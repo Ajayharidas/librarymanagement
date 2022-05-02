@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="row u-form">
+    <div class="card col-6">
+        <form action="{% url 'myissues' %}" method="get" class="pl-5">
+
+            <button class="btn btn-muted" name="all" type="submit">All Issues</button>
+            <button class="btn btn-muted" name="issued" type="submit">Issued Books</button>
+            <button class="btn btn-muted" name="notissued" type="submit">Not Issued</button>
+
+
+        </form>
+    </div>
+    <div class="card col-6">
+        <ul class="list-disc mt-5 ml-4">
+            {% for issue in issues %}
+            <li><p><b>{{issue.book.book_name}}</b> issue requested {{issue.created_at}}</p>
+                <div>
+                    {% if issue.issued and not issue.returned %}
+                    <small class="text-success">Issued.</small><br>
+                    <small class="text-warning">Return Date : {{issue.return_date}}</small><br>
+                    {% elif not issue.issued %}
+                    <small class="text-info">Issue request pending</small>
+                    {% endif %}
+                    <!-- ---------------------------------------------------- -->
+                    {% if issue.issued and issue.returned %}
+                    <small class="text-primary">Returned</small>
+                    {% else %}
+                    <small class="text-danger">{{issue.days_no}}</small>
+                    {% endif %}
+                </div>
+            </li>
+            {% empty %}
+
+            <h3>Nothing found</h3>
+
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    {% for message in messages %}
+    <div class="alert alert-muted text-success">{{message}}</div>
+    {% endfor %}
+</div>
+
+<div class="row justify-content-center filter">
+
+    {% if user.is_superuser %}
+    <div class="row justify-content-center w-100">
+        <h3>Welcome {{user.username}}</h3>
+    </div>
+    {% else %}
+    <div class="col-md-3">
+        <form action="" method="get" class="filter-form rounded-0 w-75">
+            <div class="row justify-content-center">
+                <h4 class="filter-search">filter</h4>
+            </div>
+            {% csrf_token %}
+
+            {{book_filter.form|crispy}}
+            <div class="form-group">
+                <button type="submit" class="btn btn-block btn-dark">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-9 border-left">
+
+        <div class="row book-row">
+            {% for book in books %}
+            <div class="card img-fluid book-card">
+                <img src="{{book.book_image.url}}" alt="{{book.book_name}}" class="card-img-top">
+                <div class="card-img-overlay">
+                    <a href=""></a>
+                    <p class="card-text text-center"><a href="{% url 'book_details' book.id %}"
+                            class="stretched-link">{{book.book_name}}</a></p>
+                </div>
+            </div>
+
+            {% empty %}
+            <h1>no books</h1>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

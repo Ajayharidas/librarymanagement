@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    {% for b in book %}
+    <h3 class="book-head">{{b.book_name}}</h3>
+    {% endfor %}
+</div>
+
+<div class="row justify-content-center mt-4">
+    {% for b in book %}
+    <div class="col-md-3">
+        <div class="card bd-book rounded-0">
+            <a href="{% url 'issue_request' b.id %}" class="btn btn-muted btn-rqst"><i class="fa fa-info-circle"> request for issue</i></a>
+            <img src="{{b.book_image.url}}" alt="" class="card-img-top bd-img">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="card-text bd-text ml-3"><b>Author</b></p>
+                        <p class="card-text bd-text ml-3"><b>Published</b></p>
+                        <p class="card-text bd-text ml-3"><b>Genre</b></p>
+                    </div>
+                    <div class="col-6">
+                        <p class="card-text bd-text">{{b.book_author}}</p>
+                        <p class="card-text bd-text">{{b.book_publish_date}}</p>
+                        <p class="card-text bd-text">{{b.book_category.category_name}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card bd-art rounded-0">
+            <div class="card-header">
+                <h5 class="card-title"><b>Article</b></h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><small>{{b.book_description | safe}}</small></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bd-auth rounded-0">
+            <div class="card-header">
+                <h5 class="card-title"><b>{{b.book_author}}</b></h5>
+            </div>
+            <div class="card-body">
+                <img src="{{b.book_author.author_image.url}}" alt="" class="card-img-top rounded-0">
+                <p class="card-text"><small>{{b.book_author.author_article | safe}}</small></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

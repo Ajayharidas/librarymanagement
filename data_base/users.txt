@@ -1,0 +1,21 @@
+     Admin
+----------------
+username - adminlb
+password - adminlb
+
+     Users
+----------------
+ user-1
+ ------
+username - ajay
+password - ajay12345
+
+ user-2
+ ------
+username - nithin
+password - nithin
+
+ user-3
+ ------
+username - mahesh
+password - mahesh

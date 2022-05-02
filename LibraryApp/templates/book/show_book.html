@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <h1 class="book-list">Books</h1>
+</div>
+
+<div class="row justify-content-center book">
+    <table class="table table-hover table-bordered">
+
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Date of publication</th>
+                <th>Image</th>
+                <th>Update</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            {% for book in books %}
+            <tr>
+                <td><small>{{book.id}}</small></td>
+                <td><small>{{book.book_name}}</small></td>
+                <td><small>{{book.book_author.author_name}}</small></td>
+                <td><small>{{book.book_category.category_name}}</small></td>
+                <td><small>{{book.book_description | safe}}</small></td>
+                <td><small>{{book.book_publish_date}}</small></td>
+                <td><img src="{{book.book_image.url}}" alt="{{book.book_name}}" class="w-75"></td>
+                <td><a href="{% url 'edit_book' book.id %}" class="btn btn-sm btn-outline-info">update</a>
+                </td>
+                <td><a href="{% url 'delete_book' book.id %}" class="btn btn-sm btn-outline-danger">remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock%}
