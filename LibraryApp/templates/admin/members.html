@@ -2,6 +2,8 @@
 
 {% load crispy_forms_filters %}
 
+{% load static %}
+
 {% block content %}
 
 <div class="row justify-content-center">
@@ -36,7 +38,13 @@
                     <td>{{u.user_mobile}}</td>
                     <td>{{u.user.email}}</td>
                     <td>{{u.user.username}}</td>
-                    <td><img src="{{u.user_photo.url}}" alt="" class="w-25"></td>
+                    <td>
+                        {% if u.user_photo == "/static/image/default.png" %}
+                            <img src="{% static 'image/default.png' %}" alt="" class="w-25">
+                        {% else %}
+                            <img src="{{u.user_photo.url}}" alt="" class="w-25">
+                        {% endif %}
+                    </td>
                     <td><a href="{% url 'delete_member' u.user.id %}" class="btn btn-sm btn-outline-danger">remove</a></td>
                 </tr>
                 {% endfor %}

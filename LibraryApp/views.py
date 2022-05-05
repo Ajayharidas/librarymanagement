@@ -9,6 +9,7 @@ from LibraryApp.filters import BookFilter
 from django.utils import timezone
 import datetime
 from LibraryApp.utilities import calcFine
+import os
 
 # -------------- add author---------------
 @login_required(login_url='log_in')
@@ -145,7 +146,7 @@ def sign_up(request):
         cpassw = request.POST.get('cpassw')
         gender = request.POST.get('gender')
         mobile = request.POST.get('mobile')
-        photo = request.FILES.get('photo')
+        p = request.FILES.get('photo')
         if cpassw == passw:
             if User.objects.filter(username=uname).exists():
                 messages.info(request, 'Username not available...')
@@ -154,6 +155,10 @@ def sign_up(request):
                 messages.info(request, 'Email not available...')
                 return redirect('sign_up')
             else:
+                if request.FILES.get('photo') is not None:
+                    photo = request.FILES.get('photo')
+                else:
+                    photo = "/static/image/default.png"
                 user = User.objects.create_user(first_name=fname,last_name=lname,email=email,username=uname,password=passw)
                 user.save()
                 u = User.objects.get(id=user.id)
@@ -226,7 +231,15 @@ def edit_profile(request):
         umember.user.email = request.POST.get('email')
         umember.user_address = request.POST.get('address')
         umember.user_mobile = request.POST.get('mobile')
-        umember.user_photo = request.FILES.get('photo')
+        if request.FILES.get('photo') is not None:
+            if not umember.user_photo == "/static/image/default.png":
+                os.remove(umember.user_photo.path)
+                umember.user_photo = request.FILES.get('photo')
+            else:
+                umember.user_photo = request.FILES.get('photo')
+        else:
+            os.remove(umember.user_photo.path)
+            umember.user_photo = "/static/image/default.png"
         umember.user.save()
         umember.save()
         return redirect('profile')
@@ -343,6 +356,7 @@ def delete_fine(request,pk):
     fine = Fine.objects.get(id=pk)
     fine.delete()
     return redirect('all_fines')
+
 
 
 

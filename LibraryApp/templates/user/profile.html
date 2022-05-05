@@ -2,6 +2,8 @@
 
 {% load crispy_forms_filters %}
 
+{% load static %}
+
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-4">
@@ -13,7 +15,11 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <img src="{{u.user_photo.url}}" alt="" class="card-img-top ed-img rounded-circle">
+                {% if u.user_photo == "/static/image/default.png" %}
+                    <img src="{% static 'image/default.png' %}" alt="" class="card-img-top ed-img rounded-circle">
+                {% else %}
+                    <img src="{{u.user_photo.url}}" alt="" class="card-img-top ed-img rounded-circle">
+                {% endif %}
             </div>
             <div class="card-body">
                 <div class="row">
